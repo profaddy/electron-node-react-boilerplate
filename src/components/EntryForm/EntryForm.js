@@ -15,7 +15,7 @@ let quantitiesList = [];
 for (let i = 0; i < 100; i++) {
     quantitiesList.push({ name: i, value: i })
 }
-const EntryForm = ({ classes, onCancel }) => {
+const EntryForm = ({ classes, onCancel, addEntry }) => {
     const [initialValues, setCount] = useState({
         entry_type: "taken"
     });
@@ -26,7 +26,10 @@ const EntryForm = ({ classes, onCancel }) => {
                 <div className={classes.flex1}>
                     <Form
                         onSubmit={(values) => {
-                            console.log(values)
+                            console.log(values);
+                            console.log({...values,user_id:"5e63be2b0f3b18288cee0ee2",product_id:"5e646efc8ff1e03858423da8"});
+                            const data = {...values,user_id:"5e63be2b0f3b18288cee0ee2",product_id:"5e646efc8ff1e03858423da8"}
+                            addEntry(data);
                             // if (values.omnisci.installation.licenseOption !== "new") {
                             //     values.omnisci.installation.licenseId = values.omnisci.installation.licenseOption;
                             // }

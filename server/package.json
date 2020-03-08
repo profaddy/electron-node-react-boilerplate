@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
-    "install-win-service": "node node-service.js",
+    "install-win-service": "node node-service-install.js",
     "uninstall-win-service": "node node-service-uninstall.js"
   },
   "author": "Adnan Saify",
@@ -17,6 +17,7 @@
     "moment": "^2.24.0",
     "mongoose": "^5.9.3",
     "morgan": "^1.9.1",
+    "node-windows": "^1.0.0-beta.1",
     "nodemon": "^2.0.2"
   }
 }

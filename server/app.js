@@ -8,7 +8,12 @@ const productRoutes = require("./api/routes/products");
 const userRoutes = require("./api/routes/users");
 const entriesRoutes = require("./api/routes/entries");
 
-mongoose.connect(`mongodb+srv://adnansaify11:${process.env.MONGO_SECRET_KEY}@cluster0-gbsnu.mongodb.net/test?retryWrites=true&w=majority`,
+// // To run on mongodb atlas
+// mongoose.connect(`mongodb+srv://adnansaify11:${process.env.MONGO_SECRET_KEY}@cluster0-gbsnu.mongodb.net/test?retryWrites=true&w=majority`,
+//     {useUnifiedTopology:true,useNewUrlParser:true},
+// )
+// To run on local machine
+mongoose.connect(`mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false`,
     {useUnifiedTopology:true,useNewUrlParser:true},
 )
 app.use(morgan("dev"));

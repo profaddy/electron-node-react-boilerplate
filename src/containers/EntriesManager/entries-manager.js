@@ -55,6 +55,7 @@ class EntriesManager extends Component {
                     showResizeOptions={false}
                 ><EntryForm 
                     onCancel={this.closeAddEntryModal}
+                    addEntry={this.props._addEntry}
                 /></ModalWrapper>
             </div>
         );
