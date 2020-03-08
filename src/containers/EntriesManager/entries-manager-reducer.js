@@ -17,6 +17,15 @@ const Reducer = (state = INITIAL_STATE, action) => {
         ...state,
          entries:entries
       }
+    // case ActionTypes.ADD_ENTRY_SUCCESS:
+    //   let entries = [
+    //     ...state.entries
+    // ];
+    //   entries = entries.concat(action.data);
+    //   return{
+    //     ...state,
+    //       entries:entries
+    //   }
     case ActionTypes.OPEN_ADD_ENTRY_MODAL:
       return {...state,addEntryModalShowing:true}
     case ActionTypes.CLOSE_ADD_ENTRY_MODAL:

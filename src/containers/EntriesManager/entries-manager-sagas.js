@@ -1,10 +1,11 @@
 import Actions from "./entries-manager-action-constants";
 import { all, put, call, takeEvery } from "redux-saga/effects";
-import { fetchEntries } from "./entries-manager-api.js";
+import { fetchEntries, addEntry } from "./entries-manager-api.js";
 import moment from "moment";
-function* addEntriesSaga(action) {
+function* addEntrySaga(action) {
     try {
         console.log(action);
+        const { data } = yield call(addEntry,action.data);
         yield put({ type: Actions.ADD_ENTRY_SUCCESS });
     } catch (error) {
         yield put({ type: Actions.ADD_ENTRY_FAILURE });
@@ -16,7 +17,7 @@ function* fetchEntriesSaga(action) {
     try {
         console.log(action);
         const { data }  = yield call(fetchEntries);
-        const { entries }  = data
+        const { entries }  = data;
         const formattedEntries = entries.reduce((acc,item) => {
             const entry = [
                 moment(item.created_at).format("MM-DD-YYYY"),
@@ -49,7 +50,7 @@ function* fetchEntriesSaga(action) {
 
 export default function* entriesMnaagerSagas() {
     yield all([
-        takeEvery(Actions.ADD_ENTRY_REQUEST, addEntriesSaga),
+        takeEvery(Actions.ADD_ENTRY_REQUEST, addEntrySaga),
         takeEvery(Actions.FETCH_ENTRY_REQUEST, fetchEntriesSaga)
     ]);
 }

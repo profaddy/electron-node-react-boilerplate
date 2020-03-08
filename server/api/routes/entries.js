@@ -38,8 +38,8 @@ router.post(("/"),async (req, res, next) => {
         console.log(error)
     });
 
-    await Stock.find({product_id:req.body.product_id,user_id:req.body.user_id  }).exec().then(result => {
-        stock = result[0];
+    await Stock.findOne({product_id:req.body.product_id,user_id:req.body.user_id  }).exec().then(result => {
+        stock = result;
     }).catch(error => {
         console.log(error)
     });
