@@ -1,5 +1,4 @@
 import ActionTypes from "./inventory-manager-action-constants";
-// import {createNotification} from "../../utils/notificationHelper";
 
 const Actions = {
     _addInventory: (user) => {
@@ -8,9 +7,9 @@ const Actions = {
             user
         };
     },
-    _fetchInventories:() => {
+    _fetchInventories: () => {
         return {
-            type:ActionTypes.FETCH_INVENTORIES_REQUEST
+            type: ActionTypes.FETCH_INVENTORIES_REQUEST
         };
     }
 };

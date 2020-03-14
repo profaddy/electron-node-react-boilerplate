@@ -1,7 +1,7 @@
-const styles = theme => ({
-    AddEntryButton:{
-        display:"flex",
-        justifyContent:"flex-end"
+const styles = () => ({
+    AddEntryButton: {
+        display: "flex",
+        justifyContent: "flex-end"
     }
 });
 
