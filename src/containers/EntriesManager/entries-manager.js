@@ -27,85 +27,85 @@ class EntriesManager extends Component {
     }
     closeAddEntryModal = () => {
         this.props._closeAddEntryModal();
-        this.setState({ entryMode: "edit" });
+        this.setState({ entryMode: "add" });
     }
 
-     columns = [
-         {
-             name: "created_at"
-         }, {
-             name: "Inventory"
-         }, {
-             name: "Username"
-         }, {
-             name: "Taken"
-         }, {
-             name: "Consumed"
-         }, {
-             name: "Returned"
-         }, {
-             name: "Remaining"
-         }, {
-             name: "id",
-             value: "test",
-             options: {
-                 display: false
-             }
-         }, {
-             name: "Actions",
-             options: {
-                 customBodyRender: (value, tableMeta, updateValue) => {
-                     return (
-                         <Button onClick={() => {
-                             this.props._fetchEntryInfo(value);
-                             this.setState({ entryMode: "edit" });
-                         }}> 
-                             {" "}
-                             <EditIcon color="primary" />
-                         </Button>
-                     );
-                 }
-             }
-         }
-     ]
+    columns = [
+        {
+            name: "created_at"
+        }, {
+            name: "Inventory"
+        }, {
+            name: "Username"
+        }, {
+            name: "Taken"
+        }, {
+            name: "Consumed"
+        }, {
+            name: "Returned"
+        }, {
+            name: "Remaining"
+        }, {
+            name: "id",
+            value: "test",
+            options: {
+                display: false
+            }
+        }, {
+            name: "Actions",
+            options: {
+                customBodyRender: (value, tableMeta, updateValue) => {
+                    return (
+                        <Button onClick={() => {
+                            this.props._fetchEntryInfo(value);
+                            this.setState({ entryMode: "edit" });
+                        }}>
+                            {" "}
+                            <EditIcon color="primary" />
+                        </Button>
+                    );
+                }
+            }
+        }
+    ]
 
-     render() {
-         const { entries, addEntryModalShowing, classes } = this.props;
-         return (
-             <div>
-                 <div className={classes.AddEntryButton}>
-                     <Button color="primary" onClick={this.openAddEntryModal}>
-Add Entry
+    render() {
+        const { entries, addEntryModalShowing, classes } = this.props;
+        return (
+            <div>
+                <div className={classes.AddEntryButton}>
+                    <Button color="primary" onClick={this.openAddEntryModal}>
+                        Add Entry
                      </Button>
-                 </div>
-                 <MUIDataTable
-                     title={"Switch On Services Employee List"}
-                     data={entries}
-                     columns={this.columns}
-                     options={options}
-                 />
-                 <ModalWrapper
-                     title={"Add Entry"}
-                     isOpen={addEntryModalShowing}
-                     minWidth={720}
-                     showBottomToolbar={false}
-                     showCloseIcon={true}
-                     onClose={this.closeAddEntryModal}
-                     showResizeOptions={false}
-                 >
-                     <EntryForm
-                         onCancel={this.closeAddEntryModal}
-                         addEntry={this.props._addEntry}
-                         users={this.props.users}
-                         inventories={this.props.inventories}
-                         selectedEntry={this.props.selectedEntry}
-                         entryMode={this.state.entryMode}
-                         updateEntry={this.props._updateEntry}
-                     />
-                 </ModalWrapper>
-             </div>
-         );
-     }
+                </div>
+                <MUIDataTable
+                    title={"Switch On Services Employee List"}
+                    data={entries}
+                    columns={this.columns}
+                    options={options}
+                />
+                <ModalWrapper
+                    title={"Add Entry"}
+                    isOpen={addEntryModalShowing}
+                    minWidth={720}
+                    showBottomToolbar={false}
+                    showCloseIcon={true}
+                    onClose={this.closeAddEntryModal}
+                    showResizeOptions={false}
+                >
+                    <EntryForm
+                        onCancel={this.closeAddEntryModal}
+                        addEntry={this.props._addEntry}
+                        users={this.props.users}
+                        inventories={this.props.inventories}
+                        selectedEntry={this.props.selectedEntry}
+                        entryMode={this.state.entryMode}
+                        updateEntry={this.props._updateEntry}
+                    />
+                </ModalWrapper>
+            </div>
+        );
+    }
 }
 
 export default withStyles(styles)(EntriesManager);
