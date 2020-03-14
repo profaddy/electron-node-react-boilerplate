@@ -25,7 +25,6 @@ router.post(("/"),async (req, res, next) => {
     }).catch(error => {
         console.log(error)
     });
-    console.log(users);
     product.save().then((result) => {
         const stock = users.map((user) => {
             return {
@@ -37,7 +36,6 @@ router.post(("/"),async (req, res, next) => {
             }
         })
         Stock.collection.insert(stock).then(result => {
-            console.log("result",result)
         }).catch(error => {
             console.log(error);
         });

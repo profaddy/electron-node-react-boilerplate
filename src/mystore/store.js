@@ -5,14 +5,7 @@ import rootReducer from "./rootReducer";
 import sagaMiddleware from "./sagamiddleware";
 import userManagerSagas from "../containers/UserManager/user-manager-sagas";
 import entriesManagerSagas from "../containers/EntriesManager/entries-manager-sagas";
-// import createElectronStorage from "redux-persist-electron-storage";
-// import { persistStore, persistReducer } from 'redux-persist'
-
-// const persistConfig = {
-//     key: 'root',
-//     storage: createElectronStorage()
-//   }
-// const persistedReducer = persistReducer(persistConfig, rootReducer)
+import inventoryrManagerSagas from "../containers/InventoryManager/inventory-manager-sagas";
 
 const initialState = {};
 const enhancers = [];
@@ -40,9 +33,9 @@ const store = createStore(
     composedEnhancers
 );
 // export const  persistor = persistStore(store)
-
+// sagaMiddleware.run(inventoryManagerSagas);
 sagaMiddleware.run(userManagerSagas);
 sagaMiddleware.run(entriesManagerSagas);
-
+sagaMiddleware.run(inventoryrManagerSagas);
 
 export default store 

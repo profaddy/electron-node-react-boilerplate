@@ -27,6 +27,13 @@ const theme = createMuiTheme({
         backgroundColor: "#5C5C5C",
         textColor: "#ffffff"
     },
+    overrides: {
+        MUIDataTable: {
+          responsiveScroll: {
+            maxHeight: '58px'
+          }
+        }
+    },
     card: {
         minWidth: 270,
         separatorColor: "#F2F2F2"

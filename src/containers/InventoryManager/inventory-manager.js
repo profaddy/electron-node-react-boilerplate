@@ -5,10 +5,11 @@ import styles from "./styles";
 import withStyles from "@material-ui/core/styles/withStyles";
 import getUser  from "./userschema.js";
 
-class UserManaager extends React.Component {
+class InventoryManager extends React.Component {
 
     onAddUser = () => {
         this.props._addUser(getUser())
+        console.log("addingUser")
     }
   render() {
     const columns = ["Name", "Title", "Location", "Age", "Salary"];
@@ -90,4 +91,4 @@ class UserManaager extends React.Component {
   }
 }
 
-export default withStyles(styles)(UserManaager)
+export default withStyles(styles)(InventoryManager)

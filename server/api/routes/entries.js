@@ -79,6 +79,16 @@ router.get(("/"), async (req, res, next) => {
     }
 });
 
+router.get(("/:id"), async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const entry = await Entry.findById(id);
+        res.status(200).json(formatResponse(true, "entries retrieved successfully", { entry: entry }));
+    } catch (error) {
+        res.status(500).json(formatResponse(false, `error occured while retrieving entries: ${error}`))
+    }
+});
+
 router.post(("/"), async (req, res, next) => {
     try {
         const result = await addEntry(req.body, res, next);

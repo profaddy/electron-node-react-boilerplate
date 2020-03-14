@@ -5,39 +5,30 @@ import styles from "./styles";
 import SelectComponent from "../../components/SelectComponent/SelectComponent";
 import InputField from "../../components/InputField/InputField";
 import ToggleComponent from "../../components/ToggleComponent/ToggleComponent";
-// import get from "lodash/get";
-// import omit from "lodash/omit";
-// import moment from "moment";
-// import Tooltip from "@material-ui/core/Tooltip/Tooltip";
-// import { validator } from "./validator";
+import pick from "lodash/pick";
 
-let quantitiesList = [];
-for (let i = 0; i < 100; i++) {
-    quantitiesList.push({ name: i, value: i })
-}
-const EntryForm = ({ classes, onCancel, addEntry }) => {
+const EntryForm = ({ classes, onCancel, addEntry, users, inventories, entryMode, selectedEntry, updateEntry }) => {
     const [initialValues, setCount] = useState({
         entry_type: "taken"
     });
-
+    // const [, setEntries] = useState(entries);
+    const submitButtonText = entryMode === "edit" ? "Update" : "Create"; 
+    const CombinedInitialValues = entryMode  === "add" ? {...initialValues}: {...initialValues,...selectedEntry};
+    console.log(CombinedInitialValues,"test")
     return (
         <>
             <div className={classes.container}>
                 <div className={classes.flex1}>
                     <Form
                         onSubmit={(values) => {
-                            console.log(values);
-                            console.log({...values,user_id:"5e63be2b0f3b18288cee0ee2",product_id:"5e646efc8ff1e03858423da8"});
-                            const data = {...values,user_id:"5e63be2b0f3b18288cee0ee2",product_id:"5e646efc8ff1e03858423da8"}
-                            addEntry(data);
-                            // if (values.omnisci.installation.licenseOption !== "new") {
-                            //     values.omnisci.installation.licenseId = values.omnisci.installation.licenseOption;
-                            // }
-                            // this.props.onCreate(omit(values, [
-                            //     "omnisci.installation.licenseOption"
-                            // ]));
+                            if(entryMode === "edit"){
+                                const payload = pick(values,"_id","created_at","user_id","product_id","entry_type","entry_value");
+                                updateEntry(payload);
+                            }else{
+                                addEntry(values)
+                            }
                         }}
-                        initialValues={initialValues}
+                        initialValues={ CombinedInitialValues }
                         // validate={validator}
                         render={({ handleSubmit, pristine, invalid, values }) => (
                             <form id="add-new-entry" autoComplete="off" onSubmit={handleSubmit}>
@@ -46,24 +37,14 @@ const EntryForm = ({ classes, onCancel, addEntry }) => {
                                     <div className={classes.flex3}>
                                         <div style={{ width: 200 }}>
                                             <Field
-                                                name={"user"}
-                                                options={[
-                                                    {
-                                                        name: "U1",
-                                                        value: "u1"
-                                                    }, {
-                                                        name: "U2",
-                                                        value: "u2"
-                                                    }, {
-                                                        name: "U3",
-                                                        value: "u3"
-                                                    }
-                                                ]}
+                                                name={"user_id"}
+                                                options={users}
                                                 labelfor={"user"}
                                                 labelname={"Select User"}
                                                 component={SelectComponent}
                                                 fullWidth={true}
                                                 labelwidth={120}
+                                                disabled={entryMode === "edit"}
                                                 helperText={(
                                                     <span style={{ paddingBottom: 10 }}>
 
@@ -72,22 +53,12 @@ const EntryForm = ({ classes, onCancel, addEntry }) => {
                                         </div>
                                         <div style={{ width: 200 }}>
                                             <Field
-                                                name={"inventory"}
-                                                options={[
-                                                    {
-                                                        name: "I1",
-                                                        value: "i1"
-                                                    }, {
-                                                        name: "I2",
-                                                        value: "i2"
-                                                    }, {
-                                                        name: "I3",
-                                                        value: "i3"
-                                                    }
-                                                ]}
+                                                name={"product_id"}
+                                                options={inventories}
                                                 labelfor={"inventory"}
                                                 labelname={"Select Inventory"}
                                                 component={SelectComponent}
+                                                disabled={entryMode === "edit"}
                                                 fullWidth={true}
                                                 labelwidth={120}
                                                 helperText={(
@@ -105,21 +76,6 @@ const EntryForm = ({ classes, onCancel, addEntry }) => {
                                                 fullWidth={false}
                                             />
                                         </div>
-                                        {/* <div style={{ width: 200 }}>
-                                            <Field
-                                                name={"entry_value"}
-                                                options={quantitiesList}
-                                                labelfor={"entry_value"}
-                                                labelname={"Select Quantity"}
-                                                component={SelectComponent}
-                                                fullWidth={true}
-                                                labelwidth={120}
-                                                helperText={(
-                                                    <span style={{ paddingBottom: 10 }}>
-
-                                                    </span>
-                                                )} /> */}
-                                    {/* </div> */}
                                     <div className={classes.installTypeFieldWrap}>
                                         <div className={classes.label}>
                                             Entry Type
@@ -164,7 +120,7 @@ const EntryForm = ({ classes, onCancel, addEntry }) => {
                             color="primary"
                             className={classes.button}
                         >
-                            Create
+                            {submitButtonText}
                     </Button>
                     </div>
                 </div>

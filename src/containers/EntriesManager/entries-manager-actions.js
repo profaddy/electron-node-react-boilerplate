@@ -2,15 +2,26 @@ import ActionConstants from "./entries-manager-action-constants";
 
 const Actions = {
     _addEntry: (data) => {
-        console.log(data,"data in action")
         return {
             type: ActionConstants.ADD_ENTRY_REQUEST,
+            data
+        };
+    },
+    _updateEntry: (data) => {
+        return {
+            type: ActionConstants.UPDATE_ENTRY_REQUEST,
             data
         };
     },
     _fetchEntries:() => {
         return {
             type:ActionConstants.FETCH_ENTRY_REQUEST
+        }
+    },
+    _fetchEntryInfo:(entryId) => {
+        return {
+            type:ActionConstants.FETCH_ENTRY_INFO_REQUEST,
+            id:entryId
         }
     },
     _openAddEntryModal:() => {

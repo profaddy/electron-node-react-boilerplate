@@ -8,7 +8,6 @@ const INITIAL_STATE = {
 };
 
 const Reducer = (state = INITIAL_STATE, action) => {
-  console.log(action,"reducer")
   switch(action.type){
     case ActionTypes.ADD_USER_SUCCESS:
       let users = [
@@ -20,10 +19,14 @@ const Reducer = (state = INITIAL_STATE, action) => {
          users:users
       }
     case ActionTypes.FETCH_USER_SUCCESS:
+    //   let users = [
+    //     ...state.users
+    // ];
+      // users = users.concat(action.data);
       return{
         ...state,
-        ...action.payload
-      }
+        users:action.data
+      }  
       // case REHYDRATE:
       //   return {
       //     ...state,

@@ -3,13 +3,12 @@ import ActionTypes from "./user-manager-action-constants";
 
 const Actions = {
     _addUser: (user) => {
-        console.log(user)
         return {
             type: ActionTypes.ADD_USER_REQUEST,
             user
         };
     },
-    _fetchUser:() => {
+    _fetchUsers:() => {
         return {
             type:ActionTypes.FETCH_USER_REQUEST
         }

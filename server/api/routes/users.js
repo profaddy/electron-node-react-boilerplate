@@ -26,7 +26,6 @@ router.post(("/"),async (req, res, next) => {
     }).catch(error => {
         console.log(error)
     });
-    console.log(products);
 
     user.save().then((result) => {
         const stock = products.map((product) => {
@@ -38,9 +37,7 @@ router.post(("/"),async (req, res, next) => {
                 bag_value:0
             }
         })
-        console.log(stock,"dekhe stock kaisa dikhta hai >>>>");
         Stock.collection.insert(stock).then(result => {
-            console.log("result",result)
         }).catch(error => {
             console.log(error);
         });
@@ -62,22 +59,5 @@ router.delete(("/:userId"),(req, res, next) => {
     })
 });
 
-// router.get(("/:productId"),(req, res, next) => {
-//     const id = req.params.productId;
-//     Product.findById(id).exec().then(product => {
-//         console.log(product)
-//         res.status(200).json({product:product});
-//     }).catch(error => {console.log(error)})
-// });
-
-// router.patch(("/:productId"),(req, res, next) => {
-//     let message = "product edited"
-//     if(req.params.productId === "specific"){
-//         message = "specific product edited"
-//     }
-//     res.status(200).json({
-//         messaage:message
-//     });
-// });
 
 module.exports = router;

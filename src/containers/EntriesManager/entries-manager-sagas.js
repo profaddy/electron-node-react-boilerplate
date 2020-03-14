@@ -1,56 +1,71 @@
 import Actions from "./entries-manager-action-constants";
 import { all, put, call, takeEvery } from "redux-saga/effects";
-import { fetchEntries, addEntry } from "./entries-manager-api.js";
-import moment from "moment";
+import { fetchEntries, addEntry,fetchEntryInfo, updateEntry } from "./entries-manager-api.js";
+
 function* addEntrySaga(action) {
     try {
-        console.log(action);
-        const { data } = yield call(addEntry,action.data);
+        yield call(addEntry,action.data);
         yield put({ type: Actions.ADD_ENTRY_SUCCESS });
     } catch (error) {
         yield put({ type: Actions.ADD_ENTRY_FAILURE });
-        console.log("error occured while fetching entries", error);
+        console.error("error occured while fetching entries", error);
+    }
+}
+
+function* updateEntrySaga(action) {
+    try {
+        yield call(updateEntry,action.data);
+        yield put({ type: Actions.UPDATE_ENTRY_SUCCESS });
+    } catch (error) {
+        yield put({ type: Actions.UPDATE_ENTRY_FAILURE });
+        console.error("error occured while fetching entries", error);
     }
 }
 
 function* fetchEntriesSaga(action) {
     try {
-        console.log(action);
         const { data }  = yield call(fetchEntries);
         const { entries }  = data;
         const formattedEntries = entries.reduce((acc,item) => {
             const entry = [
-                moment(item.created_at).format("MM-DD-YYYY"),
+                item.created_at,
                 item.product_name,
                 item.user_name,
                 item.taken,
                 item.consumed,
                 item.returned,
                 item.remaining,
-                {
-                    name: "id",
-                    value:"test",
-                    options: {
-                      display: false,
-                    }
-                  },    
+                item._id,
+                item._id
             ]
-            for(let i = 0; i<1; i++){
-                acc.push(entry);
-            }
-            
+            acc.push(entry);
             return acc;
         },[])
         yield put({ type: Actions.FETCH_ENTRY_SUCCESS,data:formattedEntries })
     } catch (error) {
         yield put({ type: Actions.FETCH_ENTRY_FAILURE })
-        console.log("error occured while fetching entries", error);
+        console.error("error occured while fetching entries", error);
+    }
+}
+
+function* fetchEntryInfoSaga(action){
+    try{
+        const { id } = action;
+        const { data } = yield call(fetchEntryInfo,id);
+        const { entry } = data;
+        yield put({ type: Actions.FETCH_ENTRY_INFO_SUCCESS,data:entry })
+        yield put({ type: Actions.OPEN_ADD_ENTRY_MODAL })
+    }catch{
+        console.error("error");
+        yield put({ type: Actions.FETCH_ENTRY_INFO_FAILURE })
     }
 }
 
 export default function* entriesMnaagerSagas() {
     yield all([
         takeEvery(Actions.ADD_ENTRY_REQUEST, addEntrySaga),
-        takeEvery(Actions.FETCH_ENTRY_REQUEST, fetchEntriesSaga)
+        takeEvery(Actions.UPDATE_ENTRY_REQUEST, updateEntrySaga),
+        takeEvery(Actions.FETCH_ENTRY_REQUEST, fetchEntriesSaga),
+        takeEvery(Actions.FETCH_ENTRY_INFO_REQUEST, fetchEntryInfoSaga)
     ]);
 }

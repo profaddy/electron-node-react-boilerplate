@@ -1,12 +1,26 @@
 import Actions from "./user-manager-action-constants";
-import { all, put, select, takeEvery } from "redux-saga/effects";
+import { all, put, select, takeEvery, call } from "redux-saga/effects";
+import { fetchUsers }  from "./user-manager-api.js";
 
 const getUsers = (state) =>  state.UserManager.users
+function* fetchUsersSaga(action) {
+    try {
+        const { data }  = yield call(fetchUsers);
+        const { users }  = data;
+        const formattedUsers = users.reduce((acc,item) => {
+            const entry = {name:item.name,value:item._id}
+            acc.push(entry);
+            return acc;
+        },[])
+        yield put({ type: Actions.FETCH_USER_SUCCESS,data:formattedUsers })
+    } catch (error) {
+        yield put({ type: Actions.FETCH_ENTRY_FAILURE })
+    }
+} 
 const doesUserExist = (user,userList) => {
     try{
     let result = false
     const filteredUsers = userList.filter((item) => item.username === user.username);
-    console.log(filteredUsers,"filteredUsers")
     if(filteredUsers.length > 0){
         console.error("user already exist")
         result = true
@@ -19,7 +33,6 @@ const doesUserExist = (user,userList) => {
 export function* userLoginSaga(action) {
     try {
         const users = yield select(getUsers);
-        console.log(doesUserExist(action.user,users),"test")
         if(doesUserExist(action.user,users)){
             yield put({ type: Actions.ADD_USER_FAILURE });
             return
@@ -33,14 +46,10 @@ export function* userLoginSaga(action) {
     }
 }
 
-export function* userLogoutSaga(action){
-    console.log(action)
-}
-
 export default function* userManagerSagas() {
     yield all([
         takeEvery(Actions.ADD_USER_REQUEST, userLoginSaga),
-        takeEvery(Actions.FETCH_USER_REQUEST, userLogoutSaga)
+        takeEvery(Actions.FETCH_USER_REQUEST,fetchUsersSaga)
         // takeEvery(Actions.FETCH_USERS_REQUEST, fetchUsersSaga),
         // takeEvery(Actions.CREATE_USER_REQUEST, createUserSaga),
         // takeEvery(Actions.DELETE_USER_REQUEST, deleteUserSaga),
