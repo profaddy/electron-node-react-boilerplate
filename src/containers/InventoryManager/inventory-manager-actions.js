@@ -11,7 +11,7 @@ const Actions = {
     _fetchInventories:() => {
         return {
             type:ActionTypes.FETCH_INVENTORIES_REQUEST
-        }
+        };
     }
 };
 

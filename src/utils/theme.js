@@ -29,9 +29,9 @@ const theme = createMuiTheme({
     },
     overrides: {
         MUIDataTable: {
-          responsiveScroll: {
-            maxHeight: '58px'
-          }
+            responsiveScroll: {
+                maxHeight: "58px"
+            }
         }
     },
     card: {
@@ -119,42 +119,12 @@ const theme = createMuiTheme({
             }
         }
 
-    },
-
-    colors: {
-        Abbey: "#505256",
-        AquaSpring: "#edf6fa",
-        Alto: "#dedede",
-        AltoLight: "#dddddd",
-        Bombay: "#afb6bb",
-        Cerulean: "#108ad7",
-        CuriousBlue: "#1c9be5",
-        Denim: "#1388d7",
-        DenimDark: "#0d73c6",
-        DenimLight: "#1387d7",
-        FrenchGray: "#c2c3c8",
-        Gallery: "#eaeaea",
-        Gray: "#919191",
-        Ebb: "#efecec",
-        Elm: "#1B9172",
-        ForestGreen: "#219643",
-        hotpink: "hotpink",
-        PickledBluewood: "#28384b",
-        PickledBluewoodLight: "#28374b",
-        Punch: "#de352e",
-        PersianRed: "#cf2b2b",
-        Shark: "#242527",
-        Tundora: "#444444",
-        white: "#ffffff",
-        black: "#000000",
-        orangePeel:"#ff9800",
-        coral:"#FF7F50" ,
-        Pomegranate:"#f44336"
-    },
-    shadow: {
-        shadow1: "0px 4px 12px rgba(0,0,0, 0.4)",
-        shadow2: "0px 1px 5px 0px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 3px 1px -2px rgba(0,0,0,0.12)"
     }
+
+    // shadow: {
+    //     shadow1: "0px 4px 12px rgba(0,0,0, 0.4)",
+    //     shadow2: "0px 1px 5px 0px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 3px 1px -2px rgba(0,0,0,0.12)"
+    // }
 });
 
 export default theme;

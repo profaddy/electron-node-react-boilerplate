@@ -11,7 +11,7 @@ const Actions = {
     _fetchUsers:() => {
         return {
             type:ActionTypes.FETCH_USER_REQUEST
-        }
+        };
     }
 };
 

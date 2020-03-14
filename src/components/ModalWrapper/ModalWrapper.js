@@ -23,31 +23,31 @@ class ModalWrapper extends Component {
             minHeight: window.clientHeight
         };
     }
-//   static propTypes = {
-//       title: PropTypes.string,
-//       onClose: PropTypes.func,
-//       showCloseIcon: PropTypes.bool,
-//       children: PropTypes.node,
-//       bottomToolbar: PropTypes.node,
-//       showBottomToolbar: PropTypes.bool,
-//       fullHeight: PropTypes.bool,
-//       CloseIcon: isReactClass,
-//       minWidth: PropTypes.oneOfType([
-//           PropTypes.number, PropTypes.string
-//       ]),
-//       minHeight: PropTypes.oneOfType([
-//           PropTypes.number, PropTypes.string
-//       ]),
-//       classes: PropTypes.object,
-//       isOpen: PropTypes.bool,
-//       showResizeOptions:PropTypes.bool,
-//       toggleWindowSize:PropTypes.func,
-//       isMaximize:PropTypes.bool,
-//       showDetailViewIcon:PropTypes.bool,
-//       toggleDetailView:PropTypes.func,
-//       isDetailView:PropTypes.bool,
-//       maxWidth:PropTypes.number
-//   };
+    //   static propTypes = {
+    //       title: PropTypes.string,
+    //       onClose: PropTypes.func,
+    //       showCloseIcon: PropTypes.bool,
+    //       children: PropTypes.node,
+    //       bottomToolbar: PropTypes.node,
+    //       showBottomToolbar: PropTypes.bool,
+    //       fullHeight: PropTypes.bool,
+    //       CloseIcon: isReactClass,
+    //       minWidth: PropTypes.oneOfType([
+    //           PropTypes.number, PropTypes.string
+    //       ]),
+    //       minHeight: PropTypes.oneOfType([
+    //           PropTypes.number, PropTypes.string
+    //       ]),
+    //       classes: PropTypes.object,
+    //       isOpen: PropTypes.bool,
+    //       showResizeOptions:PropTypes.bool,
+    //       toggleWindowSize:PropTypes.func,
+    //       isMaximize:PropTypes.bool,
+    //       showDetailViewIcon:PropTypes.bool,
+    //       toggleDetailView:PropTypes.func,
+    //       isDetailView:PropTypes.bool,
+    //       maxWidth:PropTypes.number
+    //   };
 
   static defaultProps = {
       title: "",

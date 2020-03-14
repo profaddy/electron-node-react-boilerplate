@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { ConnectedRouter } from "connected-react-router";
 import { MuiThemeProvider } from "@material-ui/core/styles";
-import { createMemoryHistory } from 'history';
-import routes from './routes';
+import { createMemoryHistory } from "history";
+import routes from "./routes";
 import theme from "./utils/theme";
 // import configureStore from './store';
 import { store, history } from "./mystore";
@@ -26,18 +26,18 @@ import { store, history } from "./mystore";
 // const store = configureStore(initialState, routerHistory);
 // syncHistoryWithStore(store, routerHistory);
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
 
 ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-    {/* <PersistGate  persistor={persistor}> */}
-    <MuiThemeProvider theme={theme}>
-      {routes}
-      </MuiThemeProvider>
+    <Provider store={store}>
+        <ConnectedRouter history={history}>
+            {/* <PersistGate  persistor={persistor}> */}
+            <MuiThemeProvider theme={theme}>
+                {routes}
+            </MuiThemeProvider>
 
-      {/* </PersistGate> */}
-      </ConnectedRouter>
-  </Provider>,
-  rootElement
+            {/* </PersistGate> */}
+        </ConnectedRouter>
+    </Provider>,
+    rootElement
 );

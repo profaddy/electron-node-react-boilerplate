@@ -37,13 +37,13 @@ function* fetchEntriesSaga(action) {
                 item.remaining,
                 item._id,
                 item._id
-            ]
+            ];
             acc.push(entry);
             return acc;
-        },[])
-        yield put({ type: Actions.FETCH_ENTRY_SUCCESS,data:formattedEntries })
+        },[]);
+        yield put({ type: Actions.FETCH_ENTRY_SUCCESS,data:formattedEntries });
     } catch (error) {
-        yield put({ type: Actions.FETCH_ENTRY_FAILURE })
+        yield put({ type: Actions.FETCH_ENTRY_FAILURE });
         console.error("error occured while fetching entries", error);
     }
 }
@@ -53,11 +53,11 @@ function* fetchEntryInfoSaga(action){
         const { id } = action;
         const { data } = yield call(fetchEntryInfo,id);
         const { entry } = data;
-        yield put({ type: Actions.FETCH_ENTRY_INFO_SUCCESS,data:entry })
-        yield put({ type: Actions.OPEN_ADD_ENTRY_MODAL })
+        yield put({ type: Actions.FETCH_ENTRY_INFO_SUCCESS,data:entry });
+        yield put({ type: Actions.OPEN_ADD_ENTRY_MODAL });
     }catch{
         console.error("error");
-        yield put({ type: Actions.FETCH_ENTRY_INFO_FAILURE })
+        yield put({ type: Actions.FETCH_ENTRY_INFO_FAILURE });
     }
 }
 

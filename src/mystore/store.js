@@ -38,4 +38,4 @@ sagaMiddleware.run(userManagerSagas);
 sagaMiddleware.run(entriesManagerSagas);
 sagaMiddleware.run(inventoryrManagerSagas);
 
-export default store 
+export default store; 

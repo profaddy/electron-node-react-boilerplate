@@ -35,7 +35,7 @@
     "concurrently": "4.1.2",
     "electron": "6.0.11",
     "electron-builder": "^21.2.0",
-    "prettier": "^1.4.4",
+    "prettier": "^1.19.1",
     "react-scripts": "3.1.2",
     "wait-on": "3.3.0"
   },
@@ -47,11 +47,15 @@
   "main": "public/electron.js",
   "homepage": "./",
   "scripts": {
-    "react-start": "PORT=3001 react-scripts start",
+    "react-start": "react-scripts start",
     "react-build": "react-scripts build",
     "react-test": "react-scripts test --env=jsdom",
     "react-eject": "react-scripts eject",
     "electron-build": "electron-builder",
+    "lint": "eslint --ext .js --ext .jsx src",
+    "lint:fix": "eslint --ext .js --ext .jsx src --fix",
+    "format": "prettier --check **/*.json",
+    "format:fix": "prettier --write **/*.json",
     "release": "yarn react-build && electron-builder --publish=always",
     "build": "yarn react-build && yarn electron-build",
     "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3001 && electron .\""

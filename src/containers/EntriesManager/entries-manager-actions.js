@@ -16,23 +16,23 @@ const Actions = {
     _fetchEntries:() => {
         return {
             type:ActionConstants.FETCH_ENTRY_REQUEST
-        }
+        };
     },
     _fetchEntryInfo:(entryId) => {
         return {
             type:ActionConstants.FETCH_ENTRY_INFO_REQUEST,
             id:entryId
-        }
+        };
     },
     _openAddEntryModal:() => {
         return{
             type:ActionConstants.OPEN_ADD_ENTRY_MODAL
-        }
+        };
     },
     _closeAddEntryModal:() => {
         return{
             type:ActionConstants.CLOSE_ADD_ENTRY_MODAL
-        }
+        };
     }
 };
 

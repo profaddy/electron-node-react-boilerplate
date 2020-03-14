@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { Form, Field } from "react-final-form";
 import { Divider, Button, withStyles } from "@material-ui/core";
 import styles from "./styles";
+import { validator } from "./validator";
 import SelectComponent from "../../components/SelectComponent/SelectComponent";
 import InputField from "../../components/InputField/InputField";
 import ToggleComponent from "../../components/ToggleComponent/ToggleComponent";
 import pick from "lodash/pick";
 
 const EntryForm = ({ classes, onCancel, addEntry, users, inventories, entryMode, selectedEntry, updateEntry }) => {
-    const [initialValues, setCount] = useState({
+    const [
+        initialValues, setCount
+    ] = useState({
         entry_type: "taken"
     });
-    // const [, setEntries] = useState(entries);
     const submitButtonText = entryMode === "edit" ? "Update" : "Create"; 
     const CombinedInitialValues = entryMode  === "add" ? {...initialValues}: {...initialValues,...selectedEntry};
-    console.log(CombinedInitialValues,"test")
     return (
         <>
             <div className={classes.container}>
@@ -25,11 +26,11 @@ const EntryForm = ({ classes, onCancel, addEntry, users, inventories, entryMode,
                                 const payload = pick(values,"_id","created_at","user_id","product_id","entry_type","entry_value");
                                 updateEntry(payload);
                             }else{
-                                addEntry(values)
+                                addEntry(values);
                             }
                         }}
                         initialValues={ CombinedInitialValues }
-                        // validate={validator}
+                        validate={validator}
                         render={({ handleSubmit, pristine, invalid, values }) => (
                             <form id="add-new-entry" autoComplete="off" onSubmit={handleSubmit}>
                                 {/* <FormSpy onChange={state => this.updateDetails(state.values)} /> */}
@@ -76,43 +77,43 @@ const EntryForm = ({ classes, onCancel, addEntry, users, inventories, entryMode,
                                                 fullWidth={false}
                                             />
                                         </div>
-                                    <div className={classes.installTypeFieldWrap}>
-                                        <div className={classes.label}>
+                                        <div className={classes.installTypeFieldWrap}>
+                                            <div className={classes.label}>
                                             Entry Type
                                             </div>
-                                        <Field
-                                            name="entry_type"
-                                            options={[
-                                                {
-                                                    name: "Taken",
-                                                    value: "taken"
-                                                }, {
-                                                    name: "Consumed",
-                                                    value: "consumed"
-                                                }, {
-                                                    name: "Returned",
-                                                    value: "returned"
-                                                }
-                                            ]}
-                                            width={150}
-                                            component={ToggleComponent}
-                                        />
+                                            <Field
+                                                name="entry_type"
+                                                options={[
+                                                    {
+                                                        name: "Taken",
+                                                        value: "taken"
+                                                    }, {
+                                                        name: "Consumed",
+                                                        value: "consumed"
+                                                    }, {
+                                                        name: "Returned",
+                                                        value: "returned"
+                                                    }
+                                                ]}
+                                                width={150}
+                                                component={ToggleComponent}
+                                            />
+                                        </div>
+                                        <div>
+                                        </div>
                                     </div>
-                                    <div>
-                                    </div>
-                                </div>
-                                <div className={classes.flex1}></div>
+                                    <div className={classes.flex1}></div>
                                 </div>
                             </form>
-                )}
-            />
+                        )}
+                    />
                 </div>
                 <div>
                     <Divider />
                     <div className={classes.modalBodyBottomToolbar}>
                         <Button variant="outlined" onClick={onCancel} className={classes.button}>
                             Cancel
-                    </Button>
+                        </Button>
                         <Button
                             form="add-new-entry"
                             variant="contained"
@@ -121,7 +122,7 @@ const EntryForm = ({ classes, onCancel, addEntry, users, inventories, entryMode,
                             className={classes.button}
                         >
                             {submitButtonText}
-                    </Button>
+                        </Button>
                     </div>
                 </div>
             </div>

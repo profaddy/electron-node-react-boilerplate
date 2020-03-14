@@ -47,7 +47,6 @@ const addEntry = async (payload, res, next) => {
         let user = await User.findById(payload.user_id);
         let stock = await Stock.findOne({ product_id: payload.product_id, user_id: payload.user_id });
         const calculatedBagValues = getBagValue(payload, stock.bag_value, res);
-        console.log(calculatedBagValues.remaining)
         stock.bag_value = calculatedBagValues.remaining;
         let stockSave = await stock.save();
         const entry = new Entry({
@@ -137,7 +136,6 @@ router.put(("/"), async (req, res, next) => {
             } else {
                 prevBagValue = sortedEntries[0].remaining + sortedEntries[0][sortedEntries[0]["entry_type"]]
             }
-            console.log("prevBagValue:", prevBagValue)
             if (prevBagValue < 0) {
                 throw ("Negative stock")
             }
