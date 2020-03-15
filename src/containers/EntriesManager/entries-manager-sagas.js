@@ -1,5 +1,6 @@
 import Actions from "./entries-manager-action-constants";
 import moment from "moment";
+import { createNotification } from "../../utils/notificationHelper";
 import { all, put, call, takeEvery } from "redux-saga/effects";
 import { fetchEntries, addEntry, fetchEntryInfo, updateEntry } from "./entries-manager-api.js";
 
@@ -9,6 +10,7 @@ function* addEntrySaga(action) {
         yield put({ type: Actions.ADD_ENTRY_SUCCESS });
     } catch (error) {
         yield put({ type: Actions.ADD_ENTRY_FAILURE });
+        yield put(createNotification(`Failed to add Entry: ${error}`, `error`));
         console.error("error occured while fetching entries", error);
     }
 }
