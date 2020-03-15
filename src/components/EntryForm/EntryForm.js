@@ -14,22 +14,22 @@ const EntryForm = ({ classes, onCancel, addEntry, users, inventories, entryMode,
     ] = useState({
         entry_type: "taken"
     });
-    const submitButtonText = entryMode === "edit" ? "Update" : "Create"; 
-    const CombinedInitialValues = entryMode  === "add" ? {...initialValues}: {...initialValues,...selectedEntry};
+    const submitButtonText = entryMode === "edit" ? "Update" : "Create";
+    const CombinedInitialValues = entryMode === "add" ? { ...initialValues } : { ...initialValues, ...selectedEntry };
     return (
         <>
             <div className={classes.container}>
                 <div className={classes.flex1}>
                     <Form
                         onSubmit={(values) => {
-                            if(entryMode === "edit"){
-                                const payload = pick(values,"_id","created_at","user_id","product_id","entry_type","entry_value");
+                            if (entryMode === "edit") {
+                                const payload = pick(values, "_id", "user_id", "product_id", "entry_type", "entry_value");
                                 updateEntry(payload);
-                            }else{
+                            } else {
                                 addEntry(values);
                             }
                         }}
-                        initialValues={ CombinedInitialValues }
+                        initialValues={CombinedInitialValues}
                         validate={validator}
                         render={({ handleSubmit, pristine, invalid, values }) => (
                             <form id="add-new-entry" autoComplete="off" onSubmit={handleSubmit}>
@@ -79,7 +79,7 @@ const EntryForm = ({ classes, onCancel, addEntry, users, inventories, entryMode,
                                         </div>
                                         <div className={classes.installTypeFieldWrap}>
                                             <div className={classes.label}>
-                                            Entry Type
+                                                Entry Type
                                             </div>
                                             <Field
                                                 name="entry_type"
