@@ -7,6 +7,7 @@ import { fetchEntries, addEntry, fetchEntryInfo, updateEntry } from "./entries-m
 function* addEntrySaga(action) {
     try {
         yield call(addEntry, action.data);
+        yield put(createNotification("Entry added successfully", "success"));
         yield put({ type: Actions.ADD_ENTRY_SUCCESS });
     } catch (error) {
         yield put(createNotification(`error while creating entry: ${error.response.data.message}`, `error`));
@@ -17,7 +18,12 @@ function* addEntrySaga(action) {
 function* updateEntrySaga(action) {
     try {
         yield call(updateEntry, action.data);
+        yield put(createNotification("Entry updated successfully", "success"));
         yield put({ type: Actions.UPDATE_ENTRY_SUCCESS });
+        yield put({ type: Actions.CLOSE_ADD_ENTRY_MODAL });
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
     } catch (error) {
         yield put(createNotification(`error while updating entry: ${error.response.data.message}`, `error`));
         yield put({ type: Actions.UPDATE_ENTRY_FAILURE });
