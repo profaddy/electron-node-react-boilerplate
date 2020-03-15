@@ -9,9 +9,8 @@ function* addEntrySaga(action) {
         yield call(addEntry, action.data);
         yield put({ type: Actions.ADD_ENTRY_SUCCESS });
     } catch (error) {
+        yield put(createNotification(`error while creating entry: ${error.response.data.message}`, `error`));
         yield put({ type: Actions.ADD_ENTRY_FAILURE });
-        yield put(createNotification(`Failed to add Entry: ${error}`, `error`));
-        console.error("error occured while fetching entries", error);
     }
 }
 
@@ -20,8 +19,8 @@ function* updateEntrySaga(action) {
         yield call(updateEntry, action.data);
         yield put({ type: Actions.UPDATE_ENTRY_SUCCESS });
     } catch (error) {
+        yield put(createNotification(`error while updating entry: ${error.response.data.message}`, `error`));
         yield put({ type: Actions.UPDATE_ENTRY_FAILURE });
-        console.error("error occured while fetching entries", error);
     }
 }
 
@@ -47,6 +46,7 @@ function* fetchEntriesSaga(action) {
         }, []);
         yield put({ type: Actions.FETCH_ENTRY_SUCCESS, data: formattedEntries });
     } catch (error) {
+        yield put(createNotification(`error while fetching entry: ${error.response.data.message}`, `error`));
         yield put({ type: Actions.FETCH_ENTRY_FAILURE });
         console.error("error occured while fetching entries", error);
     }
@@ -59,8 +59,8 @@ function* fetchEntryInfoSaga(action) {
         const { entry } = data;
         yield put({ type: Actions.FETCH_ENTRY_INFO_SUCCESS, data: entry });
         yield put({ type: Actions.OPEN_ADD_ENTRY_MODAL });
-    } catch{
-        console.error("error");
+    } catch (error) {
+        yield put(createNotification(`error while fetching entry info: ${error.response.data.message}`, `error`));
         yield put({ type: Actions.FETCH_ENTRY_INFO_FAILURE });
     }
 }

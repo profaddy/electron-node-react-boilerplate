@@ -36,7 +36,7 @@ getBagValue = (payload, currentBagValue) => {
             returned: returned
         }
     } catch (error) {
-        throw ("remaing stock canot be negative")
+        throw ("Bag value cannot go negative")
     }
 }
 
@@ -65,7 +65,7 @@ const addEntry = async (payload, res, next) => {
         });
         return { remaining: remaining, entry: entry };
     } catch (error) {
-        res.status(500).json(error)
+        res.status(400).json(formatResponse(false, `${error}`));
     }
 }
 
@@ -177,11 +177,11 @@ router.put(("/"), async (req, res, next) => {
             const insertedRows = await Entry.insertMany(rowsToBeInserted);
             res.status(201).json(formatResponse(true, `entries created successfully`));
         } else {
-            res.status(500).json(formatResponse(false, "no matching records found"))
+            res.status(400).json(formatResponse(false, "no matching records found"))
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json(formatResponse(false, `network error occured ${error}`))
+        res.status(400).json(formatResponse(false, `${error}`))
     }
 })
 
