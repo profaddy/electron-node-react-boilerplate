@@ -22,3 +22,5 @@ Navigate to root of repo.
 ```cd .. ```.
 run ```yarn build```.
 Go to dist folder there you will find exe file execute it and electron app will get started that is connected to node js server running at port 4000.
+
+special thanks to [@kitze] for providing react electron wrapper
