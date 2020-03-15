@@ -4,7 +4,7 @@ var Service = require('node-windows').Service;
 var svc = new Service({
   name:'inventory-node-server',
   description: 'This is inventory management node server',
-  script: 'E:\\inventory-management\\server\\server.js',
+  script: './server.js',
   nodeOptions: [
     '--harmony',
     '--max_old_space_size=4096'
