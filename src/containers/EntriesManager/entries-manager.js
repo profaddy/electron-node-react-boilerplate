@@ -76,7 +76,7 @@ class EntriesManager extends Component {
                 <div className={classes.AddEntryButton}>
                     <Button color="primary" onClick={this.openAddEntryModal}>
                         Add Entry
-                     </Button>
+                    </Button>
                 </div>
                 <MUIDataTable
                     title={"Switch On Services Employee List"}

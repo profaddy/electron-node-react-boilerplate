@@ -10,7 +10,7 @@ function* addEntrySaga(action) {
         yield put(createNotification("Entry added successfully", "success"));
         yield put({ type: Actions.ADD_ENTRY_SUCCESS });
     } catch (error) {
-        yield put(createNotification(`error while creating entry: ${error.response.data.message}`, `error`));
+        yield put(createNotification(`error while creating entry: ${error.response.data.message}`, "error"));
         yield put({ type: Actions.ADD_ENTRY_FAILURE });
     }
 }
@@ -25,7 +25,7 @@ function* updateEntrySaga(action) {
             window.location.reload();
         }, 1000);
     } catch (error) {
-        yield put(createNotification(`error while updating entry: ${error.response.data.message}`, `error`));
+        yield put(createNotification(`error while updating entry: ${error.response.data.message}`, "error"));
         yield put({ type: Actions.UPDATE_ENTRY_FAILURE });
     }
 }
@@ -35,7 +35,7 @@ function* fetchEntriesSaga(action) {
         const { data } = yield call(fetchEntries);
         const { entries } = data;
         const formattedEntries = entries.reduce((acc, item) => {
-            const created_at = moment.utc(item.created_date, "YYYY-MM-DDThh:mm:ss.sssZ").local().format("DD-MM-YYYY hh:mm A")
+            const created_at = moment.utc(item.created_date, "YYYY-MM-DDThh:mm:ss.sssZ").local().format("DD-MM-YYYY hh:mm A");
             const entry = [
                 created_at,
                 item.product_name,
@@ -52,7 +52,7 @@ function* fetchEntriesSaga(action) {
         }, []);
         yield put({ type: Actions.FETCH_ENTRY_SUCCESS, data: formattedEntries });
     } catch (error) {
-        yield put(createNotification(`error while fetching entry: ${error.response.data.message}`, `error`));
+        yield put(createNotification(`error while fetching entry: ${error.response.data.message}`, "error"));
         yield put({ type: Actions.FETCH_ENTRY_FAILURE });
         console.error("error occured while fetching entries", error);
     }
@@ -66,7 +66,7 @@ function* fetchEntryInfoSaga(action) {
         yield put({ type: Actions.FETCH_ENTRY_INFO_SUCCESS, data: entry });
         yield put({ type: Actions.OPEN_ADD_ENTRY_MODAL });
     } catch (error) {
-        yield put(createNotification(`error while fetching entry info: ${error.response.data.message}`, `error`));
+        yield put(createNotification(`error while fetching entry info: ${error.response.data.message}`, "error"));
         yield put({ type: Actions.FETCH_ENTRY_INFO_FAILURE });
     }
 }
