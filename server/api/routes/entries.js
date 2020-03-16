@@ -61,7 +61,8 @@ const addEntry = async (payload, res, next) => {
             consumed: calculatedBagValues.consumed || 0,
             returned: calculatedBagValues.returned || 0,
             remaining: Number(calculatedBagValues.remaining),
-            created_date: moment().utc().toISOString()
+            created_date: moment().utc().toISOString(),
+            created_timestamp: moment().utc().format("X")
         });
         return { remaining: remaining, entry: entry };
     } catch (error) {
