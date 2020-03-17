@@ -30,12 +30,22 @@ function* updateEntrySaga(action) {
     }
 }
 
+function* deleteEntrySaga(action) {
+    try {
+        // yield call(deleteEntry, action.id);
+        yield put(createNotification("Entry deleted successfully", "success"));
+        yield put({ type: Actions.DELETE_ENTRY_SUCCESS });
+    } catch (error) {
+        yield put(createNotification(`error while creating entry: ${error.response.data.message}`, "error"));
+        yield put({ type: Actions.DELETE_ENTRY_FAILURE });
+    }
+}
 function* fetchEntriesSaga(action) {
     try {
         const { data } = yield call(fetchEntries);
         const { entries } = data;
         const formattedEntries = entries.reduce((acc, item) => {
-            const created_at = moment.utc(item.created_date, "YYYY-MM-DDThh:mm:ss.sssZ").local().format("DD-MM-YYYY hh:mm A");
+            const created_at = moment.utc(item.created_date, "YYYY-MM-DDThh:mm:ss.sssZ").local().format("DD-MM-YYYY");
             const entry = [
                 created_at,
                 item.product_name,
@@ -75,6 +85,7 @@ export default function* entriesMnaagerSagas() {
     yield all([
         takeEvery(Actions.ADD_ENTRY_REQUEST, addEntrySaga),
         takeEvery(Actions.UPDATE_ENTRY_REQUEST, updateEntrySaga),
+        takeEvery(Actions.DELETE_ENTRY_REQUEST,deleteEntrySaga),
         takeEvery(Actions.FETCH_ENTRY_REQUEST, fetchEntriesSaga),
         takeEvery(Actions.FETCH_ENTRY_INFO_REQUEST, fetchEntryInfoSaga)
     ]);

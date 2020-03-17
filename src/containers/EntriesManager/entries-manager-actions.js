@@ -13,6 +13,12 @@ const Actions = {
             data
         };
     },
+    _deleteEntry: (id) => {
+        return {
+            type: ActionConstants.DELETE_ENTRY_REQUEST,
+            id
+        };
+    },
     _fetchEntries:() => {
         return {
             type:ActionConstants.FETCH_ENTRY_REQUEST

@@ -28,6 +28,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
     case ActionTypes.CLOSE_ADD_ENTRY_MODAL:
         return {...state,addEntryModalShowing:false};
     case ActionTypes.ADD_ENTRY_SUCCESS:
+    case ActionTypes.DELETE_ENTRY_SUCCESS:
     default:
         return state;
     }

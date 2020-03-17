@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import MUIDataTable from "mui-datatables";
 import Button from "@material-ui/core/Button";
 import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 import withStyles from "@material-ui/core/styles/withStyles";
 import ModalWrapper from "../../components/ModalWrapper/ModalWrapper";
 import EntryForm from "../../components/EntryForm/EntryForm";
 import AddUserForm from "../../components/AddUserForm/AddUserForm";
-import AddInventoryForm from "../../components/AddInventoryForm/AddInventoryForm"
+import AddInventoryForm from "../../components/AddInventoryForm/AddInventoryForm";
+import DeleteDialogWrapper from "../../components/DeleteDialogWrapper/DeleteDialogWrapper"
 import { options } from "./helpers";
 import styles from "./styles";
 
@@ -16,7 +18,8 @@ class EntriesManager extends Component {
         this.state = {
             addEntryModalShowing: false,
             savedEntries: [],
-            entryMode: "add"
+            entryMode: "add",
+            showDeleteDialog:false
         };
     }
     componentDidMount() {
@@ -43,6 +46,14 @@ class EntriesManager extends Component {
     closeAddInventoryrModal = () => {
         this.props._closeAddInventoryModal();
     }
+    onDeleteEntry = () => {
+        this.props._deleteEntry(this.state.deleteItemId);
+        console.log("entry deleted",this.state.deleteItemId);
+        this.setState({ entryMode: "add",showDeleteDialog:false });
+    } 
+    hideDeleteDialog = () => {
+        this.setState({ entryMode: "add",showDeleteDialog:false });
+    }
 
     columns = [
         {
@@ -60,12 +71,6 @@ class EntriesManager extends Component {
         }, {
             name: "Remaining"
         }, {
-            name: "id",
-            value: "test",
-            options: {
-                display: false
-            }
-        }, {
             name: "Actions",
             options: {
                 customBodyRender: (value, tableMeta, updateValue) => {
@@ -76,6 +81,21 @@ class EntriesManager extends Component {
                         }}>
                             {" "}
                             <EditIcon color="primary" />
+                        </Button>
+                    );
+                }
+            }
+        },{
+            name: "Actions",
+            options: {
+                customBodyRender: (value, tableMeta, updateValue) => {
+                    return (
+                        <Button onClick={() => {
+                            // this.props._fetchEntryInfo(value);
+                            this.setState({ entryMode: "delete",deleteItemId:value,showDeleteDialog:true });
+                        }}>
+                            {" "}
+                            <DeleteIcon color="primary" />
                         </Button>
                     );
                 }
@@ -152,6 +172,13 @@ class EntriesManager extends Component {
                         addInventory={this.props._addInventory}
                     />
                 </ModalWrapper>
+                <DeleteDialogWrapper
+                        itemTobeDeleted={"host"}
+                        // itemName={selectedRowIp}
+                        onClose={this.hideDeleteDialog}
+                        onSubmit={this.onDeleteEntry}
+                        isOpen={this.state.showDeleteDialog}
+                    />
             </div>
         );
     }

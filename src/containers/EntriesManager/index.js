@@ -27,6 +27,7 @@ const mapDispatchToProps = (dispatch) => {
         _addInventory: bindActionCreators(inventoryActions._addInventory, dispatch),
         _addEntry: bindActionCreators(Actions._addEntry, dispatch),
         _updateEntry: bindActionCreators(Actions._updateEntry, dispatch),
+        _deleteEntry: bindActionCreators(Actions._deleteEntry,dispatch),
         _openAddEntryModal: bindActionCreators(Actions._openAddEntryModal, dispatch),
         _closeAddEntryModal: bindActionCreators(Actions._closeAddEntryModal, dispatch),
         _openAddUserModal: bindActionCreators(userActions._openAddUserModal, dispatch),
