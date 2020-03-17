@@ -5,6 +5,8 @@ import EditIcon from "@material-ui/icons/Edit";
 import withStyles from "@material-ui/core/styles/withStyles";
 import ModalWrapper from "../../components/ModalWrapper/ModalWrapper";
 import EntryForm from "../../components/EntryForm/EntryForm";
+import AddUserForm from "../../components/AddUserForm/AddUserForm";
+import AddInventoryForm from "../../components/AddInventoryForm/AddInventoryForm"
 import { options } from "./helpers";
 import styles from "./styles";
 
@@ -25,9 +27,21 @@ class EntriesManager extends Component {
     openAddEntryModal = () => {
         this.props._openAddEntryModal();
     }
+    openAddUserModal = () => {
+        this.props._openAddUserModal();
+    }
+    openAddInventoryModal = () => {
+        this.props._openAddInventoryModal()
+    }
     closeAddEntryModal = () => {
         this.props._closeAddEntryModal();
         this.setState({ entryMode: "add" });
+    }
+    closeAddUserModal = () => {
+        this.props._closeAddUserModal()
+    }
+    closeAddInventoryrModal = () => {
+        this.props._closeAddInventoryModal();
     }
 
     columns = [
@@ -70,12 +84,19 @@ class EntriesManager extends Component {
     ]
 
     render() {
-        const { entries, addEntryModalShowing, classes } = this.props;
+        console.log(this.props,"props");
+        const { entries, addEntryModalShowing,addUserModalShowing,addInventoryModalShowing,classes } = this.props;
         return (
             <div>
                 <div className={classes.AddEntryButton}>
                     <Button color="primary" onClick={this.openAddEntryModal}>
                         Add Entry
+                    </Button>
+                    <Button color="primary" onClick={this.openAddUserModal}>
+                        Add User
+                    </Button>
+                    <Button color="primary" onClick={this.openAddInventoryModal}>
+                        Add Inventry
                     </Button>
                 </div>
                 <MUIDataTable
@@ -101,6 +122,34 @@ class EntriesManager extends Component {
                         selectedEntry={this.props.selectedEntry}
                         entryMode={this.state.entryMode}
                         updateEntry={this.props._updateEntry}
+                    />
+                </ModalWrapper>
+                <ModalWrapper
+                    title={"Add User"}
+                    isOpen={addUserModalShowing}
+                    minWidth={260}
+                    showBottomToolbar={false}
+                    showCloseIcon={true}
+                    onClose={this.closeAddUserModal}
+                    showResizeOptions={false}
+                >
+                    <AddUserForm
+                        onCancel={this.closeAddUserModal}
+                        addUser={this.props._addUser}
+                    />
+                </ModalWrapper>
+                <ModalWrapper
+                    title={"Add Inventory"}
+                    isOpen={addInventoryModalShowing}
+                    minWidth={260}
+                    showBottomToolbar={false}
+                    showCloseIcon={true}
+                    onClose={this.closeAddInventoryrModal}
+                    showResizeOptions={false}
+                >
+                    <AddInventoryForm
+                        onCancel={this.closeAddInventoryrModal}
+                        addInventory={this.props._addInventory}
                     />
                 </ModalWrapper>
             </div>

@@ -2,24 +2,32 @@ import ActionTypes from "./inventory-manager-action-constants";
 
 
 const INITIAL_STATE = {
-    inventories:[]
+    inventories:[],
+    addInventoryModalShowing:false
 };
 
 const Reducer = (state = INITIAL_STATE, action) => {
+    console.log(action)
     switch(action.type){
     case ActionTypes.ADD_INVENTORY_SUCCESS:
-        let users = [
-            ...state.users
-        ];
-        users = users.concat(action.user);
         return{
             ...state,
-            users:users
+            addInventoryModalShowing:false
         };
     case ActionTypes.FETCH_INVENTORIES_SUCCESS:
         return{
             ...state,
             inventories:action.data
+        };
+    case ActionTypes.OPEN_ADD_INVENTORY_MODAL:
+        return{
+            ...state,
+            addInventoryModalShowing:true
+        };
+    case ActionTypes.CLOSE_ADD_INVENTORY_MODAL:
+        return{
+            ...state,
+            addInventoryModalShowing:false
         };
     default:
         return state;

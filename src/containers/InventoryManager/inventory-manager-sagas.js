@@ -1,6 +1,8 @@
 import Actions from "./inventory-manager-action-constants";
 import { all, put, takeEvery, call } from "redux-saga/effects";
-import { fetchInventories } from "./inventory-manager-api.js";
+import { fetchInventories, addInventory } from "./inventory-manager-api.js";
+import { createNotification } from "../../utils/notificationHelper";
+
 
 export function* fetchInventoriesSaga(action) {
     try {
@@ -18,9 +20,26 @@ export function* fetchInventoriesSaga(action) {
     }
 }
 
+export function* addInventorySaga(action) {
+    try {
+        yield call(addInventory, action.inventory);
+        yield put(createNotification("Product added successfully", "success"));
+        yield put({ type: Actions.ADD_INVENTORY_SUCCESS });
+        yield put({ type: Actions.CLOSE_ADD_INVENTORY_MODAL });
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
+    } catch (error) {
+        console.log(error);
+        yield put(createNotification(`error while adding product: ${error && error.response.data.message}`, "error"));
+        yield put({ type: Actions.ADD_INVENTORY_FAILURE });
+
+    }
+}
 
 export default function* inventoryrManagerSagas() {
     yield all([
+        takeEvery(Actions.ADD_INVENTORY_REQUEST, addInventorySaga),
         takeEvery(Actions.FETCH_INVENTORIES_REQUEST, fetchInventoriesSaga)
     ]);
 }

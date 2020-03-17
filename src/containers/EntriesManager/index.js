@@ -9,9 +9,11 @@ const mapStateToProps = (state) => {
     return {
         entries: state.EntriesManager.entries,
         addEntryModalShowing: state.EntriesManager.addEntryModalShowing,
+        addUserModalShowing: state.UserManager.addUserModalShowing,
+        addInventoryModalShowing:state.InventoryManager.addInventoryModalShowing,
         users: state.UserManager.users,
         inventories: state.InventoryManager.inventories,
-        selectedEntry: state.EntriesManager.selectedEntry
+        selectedEntry: state.EntriesManager.selectedEntry,
     };
 };
 
@@ -21,11 +23,16 @@ const mapDispatchToProps = (dispatch) => {
         _fetchEntryInfo: bindActionCreators(Actions._fetchEntryInfo, dispatch),
         _fetchInventories: bindActionCreators(inventoryActions._fetchInventories, dispatch),
         _fetchUsers: bindActionCreators(userActions._fetchUsers, dispatch),
+        _addUser: bindActionCreators(userActions._addUser, dispatch),
+        _addInventory: bindActionCreators(inventoryActions._addInventory, dispatch),
         _addEntry: bindActionCreators(Actions._addEntry, dispatch),
         _updateEntry: bindActionCreators(Actions._updateEntry, dispatch),
         _openAddEntryModal: bindActionCreators(Actions._openAddEntryModal, dispatch),
-        _closeAddEntryModal: bindActionCreators(Actions._closeAddEntryModal, dispatch)
-
+        _closeAddEntryModal: bindActionCreators(Actions._closeAddEntryModal, dispatch),
+        _openAddUserModal: bindActionCreators(userActions._openAddUserModal, dispatch),
+        _closeAddUserModal: bindActionCreators(userActions._closeAddUserModal, dispatch),
+        _openAddInventoryModal: bindActionCreators(inventoryActions._openAddInventoryModal, dispatch),
+        _closeAddInventoryModal: bindActionCreators(inventoryActions._closeAddInventoryModal, dispatch)
     };
 };
 export default connect(

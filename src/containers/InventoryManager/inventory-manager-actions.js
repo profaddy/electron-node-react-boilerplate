@@ -1,16 +1,27 @@
 import ActionTypes from "./inventory-manager-action-constants";
 
 const Actions = {
-    _addInventory: (user) => {
+    _addInventory: (inventory) => {
         return {
             type: ActionTypes.ADD_INVENTORY_REQUEST,
-            user
+            inventory
         };
     },
     _fetchInventories: () => {
         return {
             type: ActionTypes.FETCH_INVENTORIES_REQUEST
         };
+    },
+    _openAddInventoryModal:() => {
+        return {
+            type: ActionTypes.OPEN_ADD_INVENTORY_MODAL,
+        }
+    },
+    _closeAddInventoryModal:() => {
+        console.log("hit")
+        return {
+            type: ActionTypes.CLOSE_ADD_INVENTORY_MODAL,
+        }
     }
 };
 

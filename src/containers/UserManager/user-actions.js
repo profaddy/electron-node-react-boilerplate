@@ -8,10 +8,20 @@ const Actions = {
             user
         };
     },
-    _fetchUsers:() => {
+    _fetchUsers: () => {
         return {
-            type:ActionTypes.FETCH_USER_REQUEST
+            type: ActionTypes.FETCH_USER_REQUEST
         };
+    },
+    _openAddUserModal:() => {
+        return {
+            type: ActionTypes.OPEN_ADD_USER_MODAL,
+        }
+    },
+    _closeAddUserModal:() => {
+        return {
+            type: ActionTypes.CLOSE_ADD_USER_MODAL,
+        }
     }
 };
 
