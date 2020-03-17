@@ -15,18 +15,18 @@ router.get(("/"),(req, res, next) => {
 });
 
 router.post(("/"),async (req, res, next) => {
+    try{
+    const findRecordWithReqName = await Product.findOne({name:req.body.name});
+    if(findRecordWithReqName !== null){
+        throw("Product already exists");
+    }
     const product = new Product({
         _id:new mongoose.Types.ObjectId(),
         name:req.body.name
     });
-    let users = [];
-    await User.find().exec().then(result => {
-        users = result;
-    }).catch(error => {
-        console.log(error)
-    });
-    product.save().then((result) => {
-        const stock = users.map((user) => {
+    let users = await User.find();
+    const savedProduct = await product.save()
+    const stock = await users.map((user) => {
             return {
                 product_id:product._id,
                 user_id:user._id,
@@ -35,14 +35,12 @@ router.post(("/"),async (req, res, next) => {
                 bag_value:0
             }
         })
-        Stock.collection.insert(stock).then(result => {
-        }).catch(error => {
-            console.log(error);
-        });
-        res.status(201).json(formatResponse(true,"product created successfully",{createdProduct:product}));
-    }).catch(error => {
-        res.status(500).json(formatResponse(false,`error while creating product: ${error}`));        
-    });
+        const createdStock = await Stock.collection.insert(stock);
+        res.status(201).json(formatResponse(true,"product created successfully",{createdProduct:savedProduct}));
+}catch(error){
+    res.status(500).json(formatResponse(false,`${error}`));        
+
+}
 });
 
 router.delete(("/:productId"),(req, res, next) => {

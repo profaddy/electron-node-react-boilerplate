@@ -22,7 +22,7 @@ export function* addUserSaga(action) {
     try {
         yield call(addUser, action.user);
         yield put(createNotification("User added successfully", "success"));
-        yield put({ type: Actions.ADD_USER_SUCCESS, user: action.user });
+        // yield put({ type: Actions.ADD_USER_SUCCESS, user: action.user });
     } catch (error) {
         console.log(error);
         yield put(createNotification(`error while adding entry: ${error && error.response.data.message}`, "error"));
