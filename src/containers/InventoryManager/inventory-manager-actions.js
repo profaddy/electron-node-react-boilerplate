@@ -18,7 +18,6 @@ const Actions = {
         }
     },
     _closeAddInventoryModal:() => {
-        console.log("hit")
         return {
             type: ActionTypes.CLOSE_ADD_INVENTORY_MODAL,
         }

@@ -102,7 +102,6 @@ router.post(("/"), async (req, res, next) => {
 router.delete(("/:entryId"), async (req, res, next) => {
     try {
         const getSelectedItem = await Entry.findOne({ _id: req.params.entryId });
-        console.log(getSelectedItem);
         let sortedEntries = await Entry.find({
             user_id: getSelectedItem.user_id,
             product_id: getSelectedItem.product_id,

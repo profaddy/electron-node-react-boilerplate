@@ -7,7 +7,6 @@ const INITIAL_STATE = {
 };
 
 const Reducer = (state = INITIAL_STATE, action) => {
-    console.log(action)
     switch(action.type){
     case ActionTypes.ADD_INVENTORY_SUCCESS:
         return state

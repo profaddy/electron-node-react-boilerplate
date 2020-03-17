@@ -9,7 +9,6 @@ class InventoryManager extends React.Component {
 
     onAddUser = () => {
         this.props._addUser(getUser());
-        console.log("addingUser");
     }
     render() {
         const columns = [

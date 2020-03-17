@@ -48,7 +48,6 @@ class EntriesManager extends Component {
     }
     onDeleteEntry = () => {
         this.props._deleteEntry(this.state.deleteItemId);
-        console.log("entry deleted",this.state.deleteItemId);
         this.setState({ entryMode: "add",showDeleteDialog:false });
     } 
     hideDeleteDialog = () => {
