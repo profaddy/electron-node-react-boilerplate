@@ -2,7 +2,7 @@ import Actions from "./entries-manager-action-constants";
 import moment from "moment";
 import { createNotification } from "../../utils/notificationHelper";
 import { all, put, call, takeEvery } from "redux-saga/effects";
-import { fetchEntries, addEntry, fetchEntryInfo, updateEntry } from "./entries-manager-api.js";
+import { fetchEntries, addEntry, fetchEntryInfo, updateEntry, deleteEntry } from "./entries-manager-api.js";
 
 function* addEntrySaga(action) {
     try {
@@ -32,7 +32,7 @@ function* updateEntrySaga(action) {
 
 function* deleteEntrySaga(action) {
     try {
-        // yield call(deleteEntry, action.id);
+        yield call(deleteEntry, action.id);
         yield put(createNotification("Entry deleted successfully", "success"));
         yield put({ type: Actions.DELETE_ENTRY_SUCCESS });
     } catch (error) {

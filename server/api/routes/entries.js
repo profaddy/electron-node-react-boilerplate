@@ -72,7 +72,7 @@ const addEntry = async (payload, res, next) => {
 
 router.get(("/"), async (req, res, next) => {
     try {
-        const entries = await Entry.find().sort({ created_date: 'desc' }).exec();
+        const entries = await Entry.find().sort({ created_date: 'asc' }).exec();
         res.status(200).json(formatResponse(true, "entries retrieved successfully", { entries: entries }));
     } catch (error) {
         res.status(500).json(formatResponse(false, `error occured while retrieving entries: ${error}`))
@@ -99,22 +99,64 @@ router.post(("/"), async (req, res, next) => {
     }
 });
 
-router.delete(("/:entryId"), (req, res, next) => {
-    const id = req.params.entryId;
-    Entry.findByIdAndRemove(id).exec().then(response => {
-        res.status(200).json({
-            message: "entry deleted successsfully",
-            id: response.id
-        });
-    }).catch(error => {
-        res.status(500).json(formatResponse(false, `error while deleting entry: ${error}`));
-    })
+router.delete(("/:entryId"), async (req, res, next) => {
+    try {
+        const getSelectedItem = await Entry.findOne({ _id: req.params.entryId });
+        console.log(getSelectedItem);
+        let sortedEntries = await Entry.find({
+            user_id: getSelectedItem.user_id,
+            product_id: getSelectedItem.product_id,
+            created_date: { $gte: getSelectedItem.created_date }
+        }).sort({ created_date: 'asc' }).exec()
+        if (sortedEntries.length !== 0) {
+            let prevBagValue = null;
+            if (sortedEntries.length !== 0 && sortedEntries[0].entry_type === "taken") {
+                prevBagValue = sortedEntries[0].remaining - sortedEntries[0].taken
+            } else {
+                prevBagValue = sortedEntries[0].remaining + sortedEntries[0][sortedEntries[0]["entry_type"]]
+            }
+            if (prevBagValue < 0) {
+                throw ("Negative stock")
+            }
+            const rowsToBeInserted = sortedEntries.reduce((acc, item, index) => {
+                let updatedItem = [];
+                if (index === 0) {
+                    item["entry_type"] = 0
+                    item["entry_value"] = 0
+                    updatedItem = {
+                        ...item._doc,
+                        ...getBagValue(item._doc, prevBagValue),
+                    }
+                } else {
+                    updatedItem = {
+                        ...item._doc,
+                        ...getBagValue(item._doc, acc[index - 1].remaining),
+                    }
+                }
+                acc.push(updatedItem);
+                return acc;
+            }, []);
+            const stock = await Stock.findOne({ product_id: sortedEntries[0].product_id, user_id: sortedEntries[0].user_id })
+            const lastRecord = rowsToBeInserted.slice()[0];
+            stock.bag_value = lastRecord.remaining;
+            const saveStock = await stock.save();
+            const recordsTobeDeleted = await rowsToBeInserted.map((item) => {
+                return item._id
+            });
+            const deletedEntries = await Entry.deleteMany({ _id: { $in: recordsTobeDeleted } });
+            const insertedRows = await Entry.insertMany(rowsToBeInserted);
+            res.status(201).json(formatResponse(true, `entrr deleted successfully`));
+        } else {
+            res.status(400).json(formatResponse(false, "no matching records found"))
+        }
+    } catch (error) {
+        res.status(400).json(formatResponse(false, `${error}`))
+    }
 });
 
 router.put(("/"), async (req, res, next) => {
     try {
         const getSelectedItem = await Entry.findOne({ _id: req.body._id });
-        console.log(getSelectedItem);
         let sortedEntries = await Entry.find({
             user_id: req.body.user_id,
             product_id: req.body.product_id,
@@ -137,7 +179,6 @@ router.put(("/"), async (req, res, next) => {
         //         // }}
         //     ]
         // )
-        console.log(sortedEntries);
         if (sortedEntries.length !== 0) {
             let prevBagValue = null;
             if (sortedEntries.length !== 0 && sortedEntries[0].entry_type === "taken") {
@@ -166,7 +207,6 @@ router.put(("/"), async (req, res, next) => {
                 acc.push(updatedItem);
                 return acc;
             }, []);
-            console.log(rowsToBeInserted, "rowsToBeInserted")
             const stock = await Stock.findOne({ product_id: sortedEntries[0].product_id, user_id: sortedEntries[0].user_id })
             const lastRecord = rowsToBeInserted.slice()[0];
             stock.bag_value = lastRecord.remaining;
@@ -181,7 +221,6 @@ router.put(("/"), async (req, res, next) => {
             res.status(400).json(formatResponse(false, "no matching records found"))
         }
     } catch (error) {
-        console.log(error);
         res.status(400).json(formatResponse(false, `${error}`))
     }
 })
