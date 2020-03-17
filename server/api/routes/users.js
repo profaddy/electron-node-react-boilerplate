@@ -15,20 +15,19 @@ router.get(("/"),(req, res, next) => {
 });
 
 router.post(("/"),async (req, res, next) => {
+    try{
+    const findRecordWithReqName = await User.findOne({name:req.body.name});
+    if(findRecordWithReqName !== null){
+        throw("User already exists");
+    }
     const user = new User({
         _id:new mongoose.Types.ObjectId(),
         name:req.body.name
     })
 
-    let products = [];
-    await Product.find().exec().then(result => {
-        products = result;
-    }).catch(error => {
-        console.log(error)
-    });
-
-    user.save().then((result) => {
-        const stock = products.map((product) => {
+    let products = await Product.find();
+    const savedUser = await  user.save();
+        const stock = await products.map((product) => {
             return {
                 product_id:product._id,
                 user_id:user._id,
@@ -37,14 +36,11 @@ router.post(("/"),async (req, res, next) => {
                 bag_value:0
             }
         })
-        Stock.collection.insert(stock).then(result => {
-        }).catch(error => {
-            console.log(error);
-        });
-        res.status(201).json(formatResponse(true,"user created successfully",{createduser:user}));
-    }).catch(error => {
-        res.status(500).json(formatResponse(false,`error while creating user: ${error}`));        
-    });
+        const createdStock = Stock.collection.insert(stock);
+        res.status(201).json(formatResponse(true,"user created successfully",{createduser:savedUser}));
+}catch(error){
+    res.status(500).json(formatResponse(false,`${error}`));        
+}
 });
 
 router.delete(("/:userId"),(req, res, next) => {
